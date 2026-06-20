@@ -3,8 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ÎÒµÄ¸öÈËÖ÷Ò³</title>
+  <title>æˆ‘çš„ä¸ªäººä¸»é¡µ</title>
   <style>
+  #lock-screen {
+  position: fixed;
+  top:0; left:0;
+  width:100%;
+  height:100%;
+  background:#0f172a;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.box {
+  background:#1e293b;
+  padding:30px;
+  border-radius:12px;
+  text-align:center;
+}
+input {
+  padding:10px;
+  margin-top:10px;
+}
+button {
+  margin-top:10px;
+  padding:10px 15px;
+}
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -57,25 +82,45 @@
   </style>
 </head>
 
+<script>
+function checkName() {
+  const name = document.getElementById("nameInput").value;
+
+  if (name === "å¶å°”ç¥º") {
+    document.getElementById("lock-screen").style.display = "none";
+  } else {
+    document.getElementById("error").innerText = "å§“åé”™è¯¯ï¼Œè¯·é‡è¯•";
+  }
+}
+</script>
 <body>
+<div id="lock-screen">
+  <div class="box">
+    <h2>ğŸ”’ è®¿é—®éªŒè¯</h2>
+    <p>è¯·è¾“å…¥å§“åæ‰èƒ½è¿›å…¥ç½‘ç«™</p>
+    <input id="nameInput" placeholder="è¯·è¾“å…¥å§“å">
+    <button onclick="checkName()">è¿›å…¥</button>
+    <p id="error" style="color:red;"></p>
+  </div>
+</div>
   <div class="container">
-    <h1>ÄãºÃ£¬ÎÒÊÇXXX ??</h1>
-    <p>ÕâÊÇÎÒµÄ¸öÈËÍøÕ¾£¬ÓÃÀ´¼ÇÂ¼Ñ§Ï°¡¢Éú»îºÍÏîÄ¿</p>
+    <h1>ä½ å¥½ï¼Œæˆ‘æ˜¯XXX ??</h1>
+    <p>è¿™æ˜¯æˆ‘çš„ä¸ªäººç½‘ç«™ï¼Œç”¨æ¥è®°å½•å­¦ä¹ ã€ç”Ÿæ´»å’Œé¡¹ç›®</p>
 
     <div class="card">
-      <h2>¹ØÓÚÎÒ</h2>
-      <p>?? ´óÑ§Éú / ¹¤¿Æ·½Ïò</p>
-      <p>?? Ä¿±ê£ºÌáÉı×Ô¼º + ÕÒµ½ÀíÏë¹¤×÷</p>
-      <p>?? ĞËÈ¤£ºÑ§Ï°¡¢ÔË¶¯¡¢¼¼Êõ</p>
+      <h2>å…³äºæˆ‘</h2>
+      <p>?? å¤§å­¦ç”Ÿ / å·¥ç§‘æ–¹å‘</p>
+      <p>?? ç›®æ ‡ï¼šæå‡è‡ªå·± + æ‰¾åˆ°ç†æƒ³å·¥ä½œ</p>
+      <p>?? å…´è¶£ï¼šå­¦ä¹ ã€è¿åŠ¨ã€æŠ€æœ¯</p>
     </div>
 
     <div class="card">
-      <h2>ÁªÏµ·½Ê½</h2>
+      <h2>è”ç³»æ–¹å¼</h2>
       <p>Email: your@email.com</p>
       <p>GitHub: <a href="#">https://github.com/yourname</a></p>
     </div>
 
-    <a class="btn" href="#">²é¿´ÎÒµÄÏîÄ¿</a>
+    <a class="btn" href="#">æŸ¥çœ‹æˆ‘çš„é¡¹ç›®</a>
   </div>
 </body>
 </html>
