@@ -3,124 +3,167 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>我的个人主页</title>
-  <style>
-  #lock-screen {
-  position: fixed;
-  top:0; left:0;
-  width:100%;
-  height:100%;
-  background:#0f172a;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
+  <title>我的个人网站</title>
 
-.box {
-  background:#1e293b;
-  padding:30px;
-  border-radius:12px;
-  text-align:center;
-}
-input {
-  padding:10px;
-  margin-top:10px;
-}
-button {
-  margin-top:10px;
-  padding:10px 15px;
-}
+  <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background: #0f172a;
       color: #e2e8f0;
-      text-align: center;
-    }
-
-    .container {
-      padding: 80px 20px;
-      max-width: 800px;
-      margin: auto;
+      transition: 0.3s;
     }
 
     h1 {
-      font-size: 40px;
-      margin-bottom: 10px;
+      margin-top: 20px;
     }
 
-    p {
-      font-size: 18px;
-      color: #94a3b8;
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+      text-align: center;
     }
 
     .card {
-      margin-top: 40px;
       background: #1e293b;
       padding: 20px;
+      margin: 20px 0;
       border-radius: 12px;
     }
 
-    a {
-      color: #38bdf8;
-      text-decoration: none;
+    input {
+      padding: 10px;
+      width: 70%;
+      margin-top: 10px;
     }
 
-    a:hover {
-      text-decoration: underline;
-    }
-
-    .btn {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 20px;
+    button {
+      padding: 10px 15px;
+      margin-top: 10px;
+      cursor: pointer;
+      border: none;
+      border-radius: 6px;
       background: #38bdf8;
       color: black;
-      border-radius: 8px;
       font-weight: bold;
+    }
+
+    ul {
+      text-align: left;
+    }
+
+    /* 🔒 锁屏 */
+    #lock {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: #0f172a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .box {
+      background: #1e293b;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    /* 🌙 light mode */
+    .light {
+      background: white;
+      color: black;
+    }
+
+    .light .card {
+      background: #f1f5f9;
     }
   </style>
 </head>
 
+<body>
+
+<!-- 🔒 锁屏 -->
+<div id="lock">
+  <div class="box">
+    <h2>🔒 请输入姓名进入网站</h2>
+    <input id="nameInput" placeholder="请输入姓名">
+    <br>
+    <button onclick="checkName()">进入</button>
+    <p id="msg" style="color:red;"></p>
+  </div>
+</div>
+
+<!-- 🌐 主内容 -->
+<div class="container">
+
+  <h1 id="title"></h1>
+
+  <button onclick="toggleMode()">🌙 切换模式</button>
+
+  <div class="card">
+    <h2>👤 关于我</h2>
+    <p>这是我的个人网站，用来记录学习和项目</p>
+  </div>
+
+  <!-- 💬 问答 -->
+  <div class="card">
+    <h2>💬 问答模块</h2>
+    <input id="question" placeholder="请输入你的问题">
+    <br>
+    <button onclick="addQuestion()">提交问题</button>
+    <ul id="list"></ul>
+  </div>
+
+</div>
+
 <script>
+/* 🔒 验证姓名 */
 function checkName() {
   const name = document.getElementById("nameInput").value;
 
   if (name === "叶尔祺") {
-    document.getElementById("lock-screen").style.display = "none";
+    document.getElementById("lock").style.display = "none";
   } else {
-    document.getElementById("error").innerText = "姓名错误，请重试";
+    document.getElementById("msg").innerText = "姓名错误，请重试";
   }
 }
+
+/* 💬 添加问题 */
+function addQuestion() {
+  const q = document.getElementById("question").value;
+  if (!q) return;
+
+  const li = document.createElement("li");
+  li.innerText = q;
+
+  document.getElementById("list").appendChild(li);
+
+  document.getElementById("question").value = "";
+}
+
+/* 🌙 模式切换 */
+function toggleMode() {
+  document.body.classList.toggle("light");
+}
+
+/* ⌨️ 打字机效果 */
+const text = "欢迎来到我的个人网站";
+let i = 0;
+
+function type() {
+  if (i < text.length) {
+    document.getElementById("title").innerHTML += text[i];
+    i++;
+    setTimeout(type, 120);
+  }
+}
+
+type();
 </script>
-<body>
-<div id="lock-screen">
-  <div class="box">
-    <h2>🔒 访问验证</h2>
-    <p>请输入姓名才能进入网站</p>
-    <input id="nameInput" placeholder="请输入姓名">
-    <button onclick="checkName()">进入</button>
-    <p id="error" style="color:red;"></p>
-  </div>
-</div>
-  <div class="container">
-    <h1>你好，我是XXX ??</h1>
-    <p>这是我的个人网站，用来记录学习、生活和项目</p>
 
-    <div class="card">
-      <h2>关于我</h2>
-      <p>?? 大学生 / 工科方向</p>
-      <p>?? 目标：提升自己 + 找到理想工作</p>
-      <p>?? 兴趣：学习、运动、技术</p>
-    </div>
-
-    <div class="card">
-      <h2>联系方式</h2>
-      <p>Email: your@email.com</p>
-      <p>GitHub: <a href="#">https://github.com/yourname</a></p>
-    </div>
-
-    <a class="btn" href="#">查看我的项目</a>
-  </div>
 </body>
 </html>
