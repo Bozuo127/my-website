@@ -3,247 +3,218 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Say My Name</title>
+<title>Ye Erqi</title>
 
 <style>
-body {
-  margin:0;
-  font-family: Arial;
-  background:#0f172a;
-  color:white;
-  overflow-x:hidden;
+body{
+margin:0;
+font-family:-apple-system, BlinkMacSystemFont, "SF Pro Display";
+background:#000;
+color:#fff;
+overflow-x:hidden;
+scroll-behavior:smooth;
 }
 
-/* ===== 开场 ===== */
-#intro {
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:black;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  z-index:9999;
+/* ===== 顶部控制 ===== */
+.topbar{
+position:fixed;
+top:20px;
+right:20px;
+z-index:999;
+display:flex;
+gap:10px;
 }
 
-#intro h1 {
-  font-size:40px;
-  letter-spacing:2px;
+.topbar button{
+background:none;
+border:1px solid rgba(255,255,255,0.3);
+color:white;
+padding:8px 12px;
+border-radius:20px;
+cursor:pointer;
+font-size:12px;
 }
 
-#intro p {
-  opacity:0.7;
+/* ===== 滚动区块 ===== */
+section{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+padding:20px;
 }
 
-/* ===== 锁屏 ===== */
-#lock {
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:#0f172a;
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:9998;
+/* ===== 大标题 ===== */
+h1{
+font-size:64px;
+font-weight:600;
+margin:0;
+letter-spacing:-1px;
+opacity:0;
+transform:translateY(40px);
+animation:show 1s forwards;
 }
 
-.box {
-  background:#1e293b;
-  padding:30px;
-  border-radius:12px;
-  text-align:center;
+p{
+opacity:0.7;
+max-width:600px;
+line-height:1.6;
 }
 
-/* ===== 主体 ===== */
-.container {
-  max-width:900px;
-  margin:auto;
-  padding:20px;
-  display:none;
+/* 动画 */
+@keyframes show{
+to{
+opacity:1;
+transform:translateY(0);
+}
 }
 
-.card {
-  background:#1e293b;
-  padding:20px;
-  margin:15px 0;
-  border-radius:12px;
+/* ===== 输入框 ===== */
+input{
+padding:14px;
+border-radius:12px;
+border:none;
+text-align:center;
+font-size:16px;
+margin-top:20px;
+outline:none;
 }
 
 /* ===== 按钮 ===== */
-button {
-  padding:10px 15px;
-  border:none;
-  border-radius:8px;
-  background:#38bdf8;
-  cursor:pointer;
-  margin-top:10px;
+button{
+margin-top:10px;
+padding:10px 18px;
+border-radius:20px;
+border:none;
+cursor:pointer;
 }
 
-/* ===== 输入 ===== */
-input {
-  padding:10px;
-  width:80%;
-  margin-top:10px;
+/* ===== 白色区块 ===== */
+.light{
+background:#fff;
+color:#000;
 }
 
-/* ===== 技能条 ===== */
-.bar {
-  background:#334155;
-  border-radius:10px;
-  overflow:hidden;
-}
-.bar div {
-  height:10px;
-  background:#38bdf8;
+.light button{
+border:1px solid #000;
+color:#000;
 }
 
-/* ===== 打字 ===== */
-#type {
-  font-size:22px;
-  margin-top:10px;
-}
-
-/* ===== 粒子背景 ===== */
-canvas {
-  position:fixed;
-  top:0;
-  left:0;
-  z-index:-1;
+/* ===== Q&A ===== */
+textarea{
+width:300px;
+height:120px;
+border-radius:10px;
+border:none;
+padding:10px;
+margin-top:10px;
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="c"></canvas>
-
-<!-- ===== 开场 ===== -->
-<div id="intro">
-  <h1>Say My Name</h1>
-  <p>click to continue</p>
-  <button onclick="start()">Enter</button>
+<!-- 顶部 -->
+<div class="topbar">
+<button onclick="lang()">🌐 EN/中</button>
+<button onclick="mode()">🌓</button>
 </div>
 
-<!-- ===== 锁屏 ===== -->
-<div id="lock">
-  <div class="box">
-    <h2>Enter Name</h2>
-    <input id="name">
-    <br>
-    <button onclick="check()">Enter</button>
-    <p id="msg"></p>
-  </div>
-</div>
+<!-- ===== 1 首屏 ===== -->
+<section>
+<h1>Say My Name</h1>
+<p id="sub">请输入你的名字进入</p>
 
-<!-- ===== 主体 ===== -->
-<div class="container" id="main">
+<input id="name" placeholder="name">
+<button onclick="check()">Enter</button>
 
-<h1 id="type"></h1>
+<p id="msg"></p>
+</section>
 
-<div class="card">
-  <h2>👤 About Me</h2>
-  <p>一个正在学习技术的大学生</p>
-</div>
+<!-- ===== 2 关于 ===== -->
+<section>
+<h1>Ye Erqi</h1>
+<p id="intro">
+宁波大学 · 电气工程 · 大二 · 19岁
+</p>
+</section>
 
-<div class="card">
-  <h2>📊 Skills</h2>
-  <p>HTML</p>
-  <div class="bar"><div style="width:90%"></div></div>
+<!-- ===== 3 兴趣 ===== -->
+<section>
+<h1 id="h">Hobbies</h1>
+<p id="hob">
+🏓 乒乓球<br>
+⚽ 足球<br>
+📚 阅读：《球状闪电》<br>
+🎵 Hey Jude
+</p>
+</section>
 
-  <p>JavaScript</p>
-  <div class="bar"><div style="width:70%"></div></div>
+<!-- ===== 4 Q&A ===== -->
+<section>
+<h1>Q&A</h1>
 
-  <p>Python</p>
-  <div class="bar"><div style="width:60%"></div></div>
-</div>
+<textarea id="q" placeholder="Ask me..."></textarea>
+<br>
+<button onclick="send()">Send</button>
 
-<div class="card">
-  <h2>💼 Projects</h2>
-  <p>✔ Personal Website</p>
-  <p>✔ GitHub Pages Site</p>
-</div>
-
-<div class="card">
-  <h2>💬 Q&A</h2>
-  <input id="q" placeholder="ask something...">
-  <button onclick="add()">Send</button>
-  <ul id="list"></ul>
-</div>
-
-<button onclick="mode()">🌙 toggle mode</button>
-
-</div>
+<p style="opacity:0.6;margin-top:10px;">
+（会尽力回复！）
+</p>
+</section>
 
 <script>
 
-/* ===== 开场 ===== */
-function start(){
-  document.getElementById("intro").style.display="none";
-  document.getElementById("lock").style.display="flex";
-}
+let ok=false;
+let en=false;
 
 /* ===== 验证 ===== */
 function check(){
-  const v = document.getElementById("name").value;
-  if(v==="叶尔祺"){
-    document.getElementById("lock").style.display="none";
-    document.getElementById("main").style.display="block";
-    type();
-  }else{
-    document.getElementById("msg").innerText="Wrong Name";
-  }
+let v=document.getElementById("name").value;
+if(v==="叶尔祺"){
+ok=true;
+document.getElementById("msg").innerText="✔ Welcome";
+}else{
+document.getElementById("msg").innerText="Wrong Name";
+}
 }
 
-/* ===== 打字 ===== */
-const text="Welcome to my world";
-let i=0;
-function type(){
-  if(i<text.length){
-    document.getElementById("type").innerHTML+=text[i++];
-    setTimeout(type,100);
-  }
+/* ===== 邮件 ===== */
+function send(){
+let q=document.getElementById("q").value;
+if(!q)return;
+
+window.location.href=
+"mailto:15258895590@163.com?subject=Q&A&body="+encodeURIComponent(q);
 }
 
-/* ===== 问答 ===== */
-function add(){
-  let v=document.getElementById("q").value;
-  if(!v)return;
-  let li=document.createElement("li");
-  li.innerText=v;
-  document.getElementById("list").appendChild(li);
-  localStorage.setItem("q",document.getElementById("list").innerHTML);
+/* ===== 语言 ===== */
+function lang(){
+en=!en;
+
+document.getElementById("sub").innerText =
+en ? "Enter your name" : "请输入你的名字进入";
+
+document.getElementById("intro").innerText =
+en ? "Ningbo University · Electrical Engineering · Sophomore · 19"
+   : "宁波大学 · 电气工程 · 大二 · 19岁";
+
+document.getElementById("h").innerText =
+en ? "Hobbies" : "兴趣爱好";
+
+document.getElementById("hob").innerHTML =
+en ?
+"🏓 Table Tennis<br>⚽ Football<br>📚 Book: Ball Lightning<br>🎵 Hey Jude"
+:
+"🏓 乒乓球<br>⚽ 足球<br>📚 阅读：《球状闪电》<br>🎵 Hey Jude";
 }
 
 /* ===== 模式 ===== */
 function mode(){
-  document.body.classList.toggle("light");
+document.body.classList.toggle("light");
 }
-
-/* ===== 粒子背景 ===== */
-const canvas=document.getElementById("c");
-const ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-
-let dots=[];
-for(let i=0;i<80;i++){
-  dots.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height});
-}
-
-function draw(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle="#38bdf8";
-  dots.forEach(d=>{
-    ctx.beginPath();
-    ctx.arc(d.x,d.y,2,0,Math.PI*2);
-    ctx.fill();
-    d.y+=1;
-    if(d.y>canvas.height)d.y=0;
-  });
-  requestAnimationFrame(draw);
-}
-draw();
 
 </script>
 
